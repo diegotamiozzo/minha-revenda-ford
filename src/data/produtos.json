@@ -1,0 +1,148 @@
+{
+  "produtos": [
+    {
+      "id": "1",
+      "nome": "Nova Geração Ranger",
+      "categoria": "Picapes",
+      "precoUnitario": 242600,
+      "descricao": "A Nova Geração Ranger combina robustez, tecnologia e versatilidade para diferentes tipos de uso.",
+      "imagem": "src/assets/img/01-nova-geracao-ranger.jpg"
+    },
+    {
+      "id": "2",
+      "nome": "Ranger Raptor",
+      "categoria": "Picapes",
+      "precoUnitario": 499000,
+      "descricao": "A Ranger Raptor é uma picape de alta performance desenvolvida para enfrentar terrenos exigentes.",
+      "imagem": "src/assets/img/02-ranger-raptor.jpg"
+    },
+    {
+      "id": "3",
+      "nome": "Maverick Black",
+      "categoria": "Picapes",
+      "precoUnitario": 219900,
+      "descricao": "A Maverick Black combina estilo, praticidade e versatilidade em uma picape compacta.",
+      "imagem": "src/assets/img/03-maverick-black.jpg"
+    },
+    {
+      "id": "4",
+      "nome": "F-150",
+      "categoria": "Picapes",
+      "precoUnitario": 560000,
+      "descricao": "A F-150 oferece força, tecnologia e capacidade para diferentes necessidades.",
+      "imagem": "src/assets/img/04-f-150.jpg"
+    },
+    {
+      "id": "5",
+      "nome": "F-150 Tremor",
+      "categoria": "Picapes",
+      "precoUnitario": 580000,
+      "descricao": "A F-150 Tremor combina a capacidade da F-150 com recursos voltados para condução fora de estrada.",
+      "imagem": "src/assets/img/05-f-150-tremor.jpg"
+    },
+    {
+      "id": "6",
+      "nome": "Maverick Tremor",
+      "categoria": "Picapes",
+      "precoUnitario": 239900,
+      "descricao": "A Maverick Tremor reúne versatilidade e características voltadas para aventuras fora de estrada.",
+      "imagem": "src/assets/img/06-maverick-tremor.jpg"
+    },
+    {
+      "id": "7",
+      "nome": "Territory",
+      "categoria": "SUVs",
+      "precoUnitario": 219900,
+      "descricao": "O Territory é um SUV que combina espaço, tecnologia, conforto e praticidade.",
+      "imagem": "src/assets/img/07-territory.jpg"
+    },
+    {
+      "id": "8",
+      "nome": "Bronco Sport",
+      "categoria": "SUVs",
+      "precoUnitario": 249900,
+      "descricao": "O Bronco Sport é um SUV projetado para unir conforto no uso urbano e capacidade para aventuras.",
+      "imagem": "src/assets/img/08-bronco-sport.jpg"
+    },
+    {
+      "id": "9",
+      "nome": "Mustang Mach-E",
+      "categoria": "Eletrificação",
+      "precoUnitario": 449000,
+      "descricao": "O Mustang Mach-E combina a identidade Mustang com propulsão totalmente elétrica e tecnologia.",
+      "imagem": "src/assets/img/09-mustang-mach-e.jpg"
+    },
+    {
+      "id": "10",
+      "nome": "Mustang Dark Horse",
+      "categoria": "Performance",
+      "precoUnitario": 649000,
+      "descricao": "O Mustang Dark Horse é um esportivo de alta performance com visual marcante e foco em desempenho.",
+      "imagem": "src/assets/img/10-mustang-dark-horse.jpg"
+    },
+    {
+      "id": "11",
+      "nome": "Maverick Hybrid",
+      "categoria": "Eletrificação",
+      "precoUnitario": 239900,
+      "descricao": "A Maverick Hybrid combina a versatilidade de uma picape com tecnologia de motorização híbrida.",
+      "imagem": "src/assets/img/11-maverick-hybrid.jpg"
+    },
+    {
+      "id": "12",
+      "nome": "Ranger XL 2.0 CH Diesel 4x4 MT",
+      "categoria": "Comerciais",
+      "precoUnitario": 248600,
+      "descricao": "Versão comercial da Ranger XL com motor diesel, tração 4x4 e transmissão manual.",
+      "imagem": "src/assets/img/12-ranger-xl-2-0-ch-diesel-4x4-mt.jpg"
+    },
+    {
+      "id": "13",
+      "nome": "Ranger XL 2.0 CH Diesel 4x4 AT",
+      "categoria": "Comerciais",
+      "precoUnitario": 258600,
+      "descricao": "Versão comercial da Ranger XL com motor diesel, tração 4x4 e transmissão automática.",
+      "imagem": "src/assets/img/13-ranger-xl-2-0-ch-diesel-4x4-at.jpg"
+    },
+    {
+      "id": "14",
+      "nome": "Ranger XL 2.0 CS Diesel 4x4 MT",
+      "categoria": "Comerciais",
+      "precoUnitario": 256600,
+      "descricao": "Ranger XL de cabine simples com motor diesel, tração 4x4 e transmissão manual.",
+      "imagem": "src/assets/img/14-ranger-xl-2-0-cs-diesel-4x4-mt.jpg"
+    },
+    {
+      "id": "15",
+      "nome": "Ranger XL 2.0 CS Diesel 4x4 AT",
+      "categoria": "Comerciais",
+      "precoUnitario": 266600,
+      "descricao": "Ranger XL de cabine simples com motor diesel, tração 4x4 e transmissão automática.",
+      "imagem": "src/assets/img/15-ranger-xl-2-0-cs-diesel-4x4-at.jpg"
+    },
+    {
+      "id": "16",
+      "nome": "Ranger XL 2.0 CD Diesel 4x4 MT",
+      "categoria": "Comerciais",
+      "precoUnitario": 272600,
+      "descricao": "Ranger XL de cabine dupla com motor diesel, tração 4x4 e transmissão manual.",
+      "imagem": "src/assets/img/16-ranger-xl-2-0-cd-diesel-4x4-mt.jpg"
+    },
+    {
+      "id": "17",
+      "nome": "Ranger XL 2.0 CD Diesel 4x4 AT",
+      "categoria": "Comerciais",
+      "precoUnitario": 282600,
+      "descricao": "Ranger XL de cabine dupla com motor diesel, tração 4x4 e transmissão automática.",
+      "imagem": "src/assets/img/17-ranger-xl-2-0-cd-diesel-4x4-at.jpg"
+    },
+    {
+      "id": "18",
+      "nome": "Ranger XLS 2.0 4x4",
+      "categoria": "Comerciais",
+      "precoUnitario": 285900,
+      "descricao": "Ranger XLS com motor 2.0 e tração 4x4, oferecendo capacidade e versatilidade.",
+      "imagem": "src/assets/img/18-ranger-xls-2-0-4x4.jpg"
+    }
+  ]
+}
