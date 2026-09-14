@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import logoMarca from './assets/img/logo-ford.png'
-import produtosData from './data/produtos.json'
+import { produtosIniciais, useProdutos } from './hooks/useProdutos.js'
 import { Carrinho } from './pages/Carrinho.jsx'
 import { Catalogo } from './pages/Catalogo.jsx'
 import { Falha } from './pages/Falha.jsx'
@@ -11,12 +11,8 @@ import { NaoEncontrada } from './pages/NaoEncontrada.jsx'
 import { Sucesso } from './pages/Sucesso.jsx'
 import './App.css'
 
-const produtosIniciais = produtosData.produtos.slice(0, 3).map((produto) => ({
-  ...produto,
-  quantidade: 1,
-}))
-
 function App() {
+  const { produtos, carregando, erro } = useProdutos()
   const [carrinho, setCarrinho] = useState(produtosIniciais)
 
   const adicionarAoCarrinho = (produto) => {
@@ -91,12 +87,23 @@ function App() {
             {/* Rotas adicionais / diferencial do projeto */}
             <Route
               path="/catalogo"
-              element={<Catalogo produtos={produtosData.produtos} onAdicionar={adicionarAoCarrinho} />}
+              element={
+                <Catalogo
+                  produtos={produtos}
+                  carregando={carregando}
+                  erro={erro}
+                  onAdicionar={adicionarAoCarrinho}
+                />
+              }
             />
             <Route
               path="/produto/:id"
               element={
-                <ProdutoDetalhe produtos={produtosData.produtos} onAdicionar={adicionarAoCarrinho} />
+                <ProdutoDetalhe
+                  produtos={produtos}
+                  carregando={carregando}
+                  onAdicionar={adicionarAoCarrinho}
+                />
               }
             />
             {/* Rotas obrigatórias do fluxo de compra (RF14) */}

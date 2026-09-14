@@ -17,13 +17,16 @@ A aplicação foi estruturada com as 4 rotas obrigatórias exigidas pela especif
 - **`/catalogo`**: Catálogo paginado com busca em tempo real e filtros por categoria para adicionar novos veículos ao carrinho.
 - **`/produto/:id`**: Tela de detalhes individuais de cada veículo com ficha técnica e botão para adicionar ao carrinho.
 
-## Tecnologias
+## Tecnologias e Custom Hooks
 
-- React 19 com JavaScript/JSX
-- Vite
-- React Router
-- React Hook Form e Zod
-- CSS responsivo
+- **React 19** com JavaScript/JSX
+- **Vite** como ferramenta de build rápida
+- **React Router** para roteamento declarativo e navegação SPA
+- **React Hook Form e Zod** para validação robusta de formulários
+- **Custom Hooks**:
+  - `usePagamento`: gerencia o estado assíncrono de simulação de compra e validação antifraude.
+  - `useProdutos`: encapsula o carregamento e integridade dos dados de produtos (array local estruturado), provendo estados reativos de `carregando`, `erro` e `produtos`, já preparado para consumo de API remota com tratamento completo de loading, erro e lista vazia.
+- **CSS responsivo** e acessível
 
 ## Estrutura do projeto
 
@@ -59,7 +62,8 @@ A aplicação foi estruturada com as 4 rotas obrigatórias exigidas pela especif
 │   ├── 📁 data
 │   │   └── ⚙️ produtos.json
 │   ├── 📁 hooks
-│   │   └── 📄 usePagamento.js
+│   │   ├── 📄 usePagamento.js
+│   │   └── 📄 useProdutos.js
 │   ├── 📁 pages
 │   │   ├── 📄 Carrinho.jsx
 │   │   ├── 📄 Catalogo.jsx
