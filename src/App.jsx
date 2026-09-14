@@ -11,8 +11,13 @@ import { NaoEncontrada } from './pages/NaoEncontrada.jsx'
 import { Sucesso } from './pages/Sucesso.jsx'
 import './App.css'
 
+const produtosIniciais = produtosData.produtos.slice(0, 3).map((produto) => ({
+  ...produto,
+  quantidade: 1,
+}))
+
 function App() {
-  const [carrinho, setCarrinho] = useState([])
+  const [carrinho, setCarrinho] = useState(produtosIniciais)
 
   const adicionarAoCarrinho = (produto) => {
     setCarrinho((itensAtuais) => {
@@ -47,13 +52,13 @@ function App() {
     <BrowserRouter>
       <div className="app-shell">
         <header className="site-header">
-          <Link to="/" aria-label="Ir para a loja">
+          <Link to="/" aria-label="Ir para o carrinho">
             <img src={logoMarca} alt="Ford" className="logo" />
           </Link>
           <span className="brand-name">Minha Revenda Ford</span>
           <nav className="site-nav" aria-label="Navegação principal">
-            <Link to="/">Veículos</Link>
-            <Link to="/carrinho" className="cart-link">
+            <Link to="/catalogo">Catálogo</Link>
+            <Link to="/" className="cart-link">
               Carrinho <span className="cart-badge">{totalItens}</span>
             </Link>
           </nav>
@@ -61,16 +66,18 @@ function App() {
 
         <main className="page-container">
           <Routes>
+            {/* Rota principal / obrigatória (RF14): Resumo do carrinho */}
             <Route
               path="/"
-              element={<Catalogo produtos={produtosData.produtos} onAdicionar={adicionarAoCarrinho} />}
-            />
-            <Route
-              path="/produto/:id"
               element={
-                <ProdutoDetalhe produtos={produtosData.produtos} onAdicionar={adicionarAoCarrinho} />
+                <Carrinho
+                  produtos={carrinho}
+                  onAtualizarQuantidade={atualizarQuantidade}
+                  onRemover={removerDoCarrinho}
+                />
               }
             />
+            {/* Rota alternativa para o carrinho */}
             <Route
               path="/carrinho"
               element={
@@ -81,6 +88,18 @@ function App() {
                 />
               }
             />
+            {/* Rotas adicionais / diferencial do projeto */}
+            <Route
+              path="/catalogo"
+              element={<Catalogo produtos={produtosData.produtos} onAdicionar={adicionarAoCarrinho} />}
+            />
+            <Route
+              path="/produto/:id"
+              element={
+                <ProdutoDetalhe produtos={produtosData.produtos} onAdicionar={adicionarAoCarrinho} />
+              }
+            />
+            {/* Rotas obrigatórias do fluxo de compra (RF14) */}
             <Route
               path="/pagamento"
               element={<Pagamento produtos={carrinho} />}

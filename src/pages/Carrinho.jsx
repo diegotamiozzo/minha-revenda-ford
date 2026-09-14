@@ -14,7 +14,7 @@ export const Carrinho = ({ produtos, onAtualizarQuantidade, onRemover }) => {
         <p className="eyebrow">Seu carrinho está vazio</p>
         <h1>Encontre seu próximo Ford</h1>
         <p>Escolha um veículo no catálogo para começar sua compra.</p>
-        <Link className="button button-primary" to="/">
+        <Link className="button button-primary" to="/catalogo">
           Explorar veículos
         </Link>
       </section>
@@ -46,7 +46,7 @@ export const Carrinho = ({ produtos, onAtualizarQuantidade, onRemover }) => {
           <Link className="button button-primary" to="/pagamento">
             Finalizar compra
           </Link>
-          <Link className="back-link" to="/">
+          <Link className="back-link" to="/catalogo">
             Continuar comprando
           </Link>
         </div>
