@@ -108,7 +108,7 @@ Abra o endereço exibido pelo Vite, normalmente `http://localhost:5173`.
 2. É possível alterar quantidades, remover itens ou navegar até `/catalogo` para explorar o inventário completo e adicionar mais produtos ao carrinho.
 3. O botão **Finalizar compra** direciona o usuário para a rota `/pagamento`.
 4. O formulário valida em tempo real titular, número do cartão (16 dígitos), validade (`MM/AA`) e CVV (3 dígitos).
-5. Durante o envio, é exibido feedback de "Processando compra..." com o botão desabilitado para evitar duplo clique.
+5. Durante o envio, é exibido feedback de "Processando compra…" com o botão desabilitado para evitar duplo clique.
 6. Se todos os dígitos do cartão forem idênticos (ex.: `1111 1111 1111 1111`), a aplicação redireciona para `/falha` e apresenta a mensagem `"tentativa de golpe"`.
 7. Qualquer outro cartão em formato válido redireciona para `/sucesso`, apresentando a confirmação de aprovação e limpando o carrinho.
 

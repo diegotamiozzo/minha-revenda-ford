@@ -138,7 +138,7 @@ export const Pagamento = ({ produtos }) => {
             disabled={processando}
             aria-busy={processando}
           >
-            {processando ? 'Processando compra...' : 'Confirmar pagamento'}
+            {processando ? 'Processando compra…' : 'Confirmar pagamento'}
           </button>
           <Link className="back-link" to="/carrinho">
             Voltar ao carrinho
