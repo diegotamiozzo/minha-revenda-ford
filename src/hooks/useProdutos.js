@@ -2,17 +2,6 @@ import { useEffect, useState } from 'react'
 import produtosData from '../data/produtos.json'
 
 /**
- * Formata os produtos iniciais para o carrinho fixo (RF01/RF02).
- */
-export const formatarProdutosIniciais = (lista) =>
-  (Array.isArray(lista) ? lista : []).slice(0, 3).map((produto) => ({
-    ...produto,
-    quantidade: 1,
-  }))
-
-export const produtosIniciais = formatarProdutosIniciais(produtosData?.produtos ?? [])
-
-/**
  * Custom hook para carregar e gerenciar os produtos da aplicação.
  * Encapsula o acesso aos dados (array local ou API futura), fornecendo
  * estados explícitos de carregamento (carregando) e erro (erro).

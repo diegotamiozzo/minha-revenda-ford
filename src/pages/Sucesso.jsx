@@ -14,8 +14,8 @@ export const Sucesso = ({ onCompraFinalizada }) => {
       <p className="eyebrow">Pagamento aprovado</p>
       <h1>Compra realizada com sucesso!</h1>
       <p>Seu pedido foi processado. Obrigado por escolher a Minha Revenda Ford.</p>
-      <Link className="button button-primary" to="/catalogo">
-        Voltar ao catálogo
+      <Link className="button button-primary" to="/">
+        Voltar à loja
       </Link>
     </section>
   )

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import logoMarca from './assets/img/logo-ford.png'
-import { produtosIniciais, useProdutos } from './hooks/useProdutos.js'
+import { useProdutos } from './hooks/useProdutos.js'
 import { Carrinho } from './pages/Carrinho.jsx'
 import { Catalogo } from './pages/Catalogo.jsx'
 import { Falha } from './pages/Falha.jsx'
@@ -13,7 +13,7 @@ import './App.css'
 
 function App() {
   const { produtos, carregando, erro } = useProdutos()
-  const [carrinho, setCarrinho] = useState(produtosIniciais)
+  const [carrinho, setCarrinho] = useState([])
 
   const adicionarAoCarrinho = (produto) => {
     setCarrinho((itensAtuais) => {
@@ -48,13 +48,13 @@ function App() {
     <BrowserRouter>
       <div className="app-shell">
         <header className="site-header">
-          <Link to="/" aria-label="Ir para o carrinho">
+          <Link to="/" aria-label="Ir para a página inicial">
             <img src={logoMarca} alt="Ford" className="logo" />
           </Link>
           <span className="brand-name">Minha Revenda Ford</span>
           <nav className="site-nav" aria-label="Navegação principal">
-            <Link to="/catalogo">Catálogo</Link>
-            <Link to="/" className="cart-link">
+            <Link to="/">Veículos</Link>
+            <Link to="/carrinho" className="cart-link">
               Carrinho <span className="cart-badge">{totalItens}</span>
             </Link>
           </nav>
@@ -62,29 +62,18 @@ function App() {
 
         <main className="page-container">
           <Routes>
-            {/* Rota principal / obrigatória (RF14): Resumo do carrinho */}
+            {/* Página inicial / Home: Catálogo de veículos */}
             <Route
               path="/"
               element={
-                <Carrinho
-                  produtos={carrinho}
-                  onAtualizarQuantidade={atualizarQuantidade}
-                  onRemover={removerDoCarrinho}
+                <Catalogo
+                  produtos={produtos}
+                  carregando={carregando}
+                  erro={erro}
+                  onAdicionar={adicionarAoCarrinho}
                 />
               }
             />
-            {/* Rota alternativa para o carrinho */}
-            <Route
-              path="/carrinho"
-              element={
-                <Carrinho
-                  produtos={carrinho}
-                  onAtualizarQuantidade={atualizarQuantidade}
-                  onRemover={removerDoCarrinho}
-                />
-              }
-            />
-            {/* Rotas adicionais / diferencial do projeto */}
             <Route
               path="/catalogo"
               element={
@@ -96,6 +85,7 @@ function App() {
                 />
               }
             />
+            {/* Detalhes do veículo */}
             <Route
               path="/produto/:id"
               element={
@@ -106,7 +96,18 @@ function App() {
                 />
               }
             />
-            {/* Rotas obrigatórias do fluxo de compra (RF14) */}
+            {/* Resumo do carrinho */}
+            <Route
+              path="/carrinho"
+              element={
+                <Carrinho
+                  produtos={carrinho}
+                  onAtualizarQuantidade={atualizarQuantidade}
+                  onRemover={removerDoCarrinho}
+                />
+              }
+            />
+            {/* Fluxo de pagamento e resultado */}
             <Route
               path="/pagamento"
               element={<Pagamento produtos={carrinho} />}

@@ -1,21 +1,15 @@
 # Minha Revenda Ford
 
-Aplicação SPA de estudo que simula uma loja virtual de uma concessionária Ford. A aplicação atende a todos os requisitos funcionais e técnicos da atividade avaliativa (RF01–RF15) e implementa um catálogo completo com busca, filtros e detalhes de produto como diferencial do projeto.
+Aplicação SPA de estudo que simula uma loja virtual de uma concessionária Ford. A página inicial (`/`) apresenta o catálogo completo de veículos, permitindo ao usuário pesquisar, filtrar, ver detalhes, adicionar itens ao carrinho e seguir pelas etapas de pagamento com simulação no navegador.
 
-## Rotas da Aplicação (RF14 / Checklist)
+## Rotas da Aplicação
 
-A aplicação foi estruturada com as 4 rotas obrigatórias exigidas pela especificação (RF14 e Checklist de Entrega), além de rotas complementares de diferencial:
-
-### Rotas Obrigatórias (RF14)
-- **`/`**: Resumo do carrinho com a lista de produtos iniciais (RF01/RF02), quantidades, preços unitários, subtotais e valor total formatado em reais (RF03). Inclui controle dinâmico de quantidades e remoção de itens.
-- **`/pagamento`**: Formulário de checkout com validação via React Hook Form e Zod (titular, número do cartão com 16 dígitos, validade MM/AA e CVV de 3 dígitos), exibindo feedback de erros e simulação de processamento assíncrono.
-- **`/sucesso`**: Tela de confirmação e aprovação do pedido, com limpeza do carrinho após finalização.
-- **`/falha`**: Tela de erro exibindo exatamente a mensagem `"tentativa de golpe"` quando o número do cartão possui todos os dígitos iguais.
-
-### Rotas Adicionais (Diferencial / Bônus)
-- **`/carrinho`**: Rota alternativa mapeada para a visualização do resumo do carrinho.
-- **`/catalogo`**: Catálogo paginado com busca em tempo real e filtros por categoria para adicionar novos veículos ao carrinho.
-- **`/produto/:id`**: Tela de detalhes individuais de cada veículo com ficha técnica e botão para adicionar ao carrinho.
+- **`/` e `/catalogo` (Home)**: Catálogo de veículos paginado com busca em tempo real e filtros por categoria. É a porta de entrada da loja para exploração e adição de veículos ao carrinho.
+- **`/produto/:id`**: Tela de detalhes individuais do veículo com ficha técnica e botão de adicionar ao carrinho.
+- **`/carrinho`**: Resumo do carrinho com itens adicionados, quantidades, subtotais e cálculo do total da compra em reais (RF03). Permite alterar quantidades e remover itens.
+- **`/pagamento`**: Formulário de checkout com validação de dados via React Hook Form e Zod (RF06), validação de 16 dígitos, MM/AA e CVV, e feedback assíncrono durante o envio (RF08).
+- **`/sucesso`**: Confirmação da compra aprovada (RF10), limpando o carrinho para novas compras.
+- **`/falha`**: Tela de erro exibindo a mensagem `"tentativa de golpe"` (RF11) quando todos os dígitos do cartão são idênticos.
 
 ## Tecnologias e Custom Hooks
 
@@ -108,13 +102,14 @@ Abra o endereço exibido pelo Vite, normalmente `http://localhost:5173`.
 
 ## Fluxo da aplicação
 
-1. Ao abrir a raiz (`/`), o usuário visualiza o resumo do carrinho com itens carregados, subtotais calculados e o valor total formatado.
-2. É possível alterar quantidades, remover itens ou navegar até `/catalogo` para explorar o inventário completo e adicionar mais produtos ao carrinho.
-3. O botão **Finalizar compra** direciona o usuário para a rota `/pagamento`.
-4. O formulário valida em tempo real titular, número do cartão (16 dígitos), validade (`MM/AA`) e CVV (3 dígitos).
-5. Durante o envio, é exibido feedback de "Processando compra…" com o botão desabilitado para evitar duplo clique.
-6. Se todos os dígitos do cartão forem idênticos (ex.: `1111 1111 1111 1111`), a aplicação redireciona para `/falha` e apresenta a mensagem `"tentativa de golpe"`.
-7. Qualquer outro cartão em formato válido redireciona para `/sucesso`, apresentando a confirmação de aprovação e limpando o carrinho.
+1. Ao abrir a rota raiz (`/`), o usuário acessa a página inicial com o catálogo de veículos, busca e filtros por categoria.
+2. Na vitrine (`/` ou `/catalogo`) ou na página de detalhes (`/produto/:id`), o usuário adiciona os veículos desejados ao carrinho.
+3. No carrinho (`/carrinho`), o usuário confere a lista de itens, subtotais e total formatado em reais, com controles para alterar quantidades ou remover itens.
+4. O botão **Finalizar compra** direciona o usuário para a rota `/pagamento`.
+5. O formulário valida em tempo real titular, número do cartão (16 dígitos), validade (`MM/AA`) e CVV (3 dígitos).
+6. Durante o envio, é exibido feedback de "Processando compra…" com o botão desabilitado para evitar duplo clique.
+7. Se todos os dígitos do cartão forem idênticos (ex.: `1111 1111 1111 1111`), a aplicação redireciona para `/falha` e apresenta a mensagem `"tentativa de golpe"`.
+8. Qualquer outro cartão em formato válido redireciona para `/sucesso`, apresentando a confirmação de aprovação e limpando o carrinho.
 
 > **Aviso**: Utilize exclusivamente dados fictícios. Nenhuma informação real de cartão de crédito é solicitada ou persistida.
 

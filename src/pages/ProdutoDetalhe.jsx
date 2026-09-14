@@ -16,12 +16,12 @@ export const ProdutoDetalhe = ({ produtos, carregando = false, onAdicionar }) =>
   }
 
   if (!produto) {
-    return <Navigate to="/catalogo" replace />
+    return <Navigate to="/" replace />
   }
 
   return (
     <section className="product-detail">
-      <Link className="back-link back-link-start" to="/catalogo">
+      <Link className="back-link back-link-start" to="/">
         ← Voltar para o catálogo
       </Link>
       <div className="product-detail-layout">

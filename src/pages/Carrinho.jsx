@@ -40,7 +40,7 @@ export const Carrinho = ({
         <p className="eyebrow">Seu carrinho está vazio</p>
         <h1>Encontre seu próximo Ford</h1>
         <p>Escolha um veículo no catálogo para começar sua compra.</p>
-        <Link className="button button-primary" to="/catalogo">
+        <Link className="button button-primary" to="/">
           Explorar veículos
         </Link>
       </section>
@@ -72,7 +72,7 @@ export const Carrinho = ({
           <Link className="button button-primary" to="/pagamento">
             Finalizar compra
           </Link>
-          <Link className="back-link" to="/catalogo">
+          <Link className="back-link" to="/">
             Continuar comprando
           </Link>
         </div>
