@@ -4,12 +4,13 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { ResumoCompra } from '../components/ResumoCompra.jsx'
 import { usePagamento } from '../hooks/usePagamento.js'
+import { normalizarNumeroCartao } from '../utils/pagamento.js'
 
 const schemaPagamento = z.object({
   titular: z.string().trim().min(1, 'Informe o nome do titular.'),
   numeroCartao: z
     .string()
-    .transform((valor) => valor.replace(/[\s-]/g, ''))
+    .transform(normalizarNumeroCartao)
     .refine((valor) => /^\d{16}$/.test(valor), {
       message: 'Informe um cartão com 16 dígitos.',
     }),
@@ -138,7 +139,7 @@ export const Pagamento = ({ produtos }) => {
             disabled={processando}
             aria-busy={processando}
           >
-            {processando ? 'Processando compra...' : 'Confirmar pagamento'}
+            {processando ? 'Processando compra…' : 'Confirmar pagamento'}
           </button>
           <Link className="back-link" to="/carrinho">
             Voltar ao carrinho

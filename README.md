@@ -1,18 +1,34 @@
 # Minha Revenda Ford
 
-Aplicação SPA de estudo que simula uma loja virtual de uma concessionária Ford. O catálogo permite pesquisar e filtrar veículos, visualizar detalhes, adicionar produtos ao carrinho e finalizar um pagamento simulado no navegador, sem backend ou integração real.
+Aplicação SPA de estudo que simula uma loja virtual de uma concessionária Ford. A aplicação atende a todos os requisitos funcionais e técnicos da atividade avaliativa (RF01–RF15) e implementa um catálogo completo com busca, filtros e detalhes de produto como diferencial do projeto.
 
-O catálogo é um diferencial em relação ao fluxo mínimo solicitado na atividade. A aplicação mantém as telas `/`, `/produto/:id` e `/carrinho` para permitir explorar veículos e montar o pedido antes das telas obrigatórias de pagamento e resultado.
+## Rotas da Aplicação (RF14 / Checklist)
 
-## Tecnologias
+A aplicação foi estruturada com as 4 rotas obrigatórias exigidas pela especificação (RF14 e Checklist de Entrega), além de rotas complementares de diferencial:
 
-- React 19 com JavaScript/JSX
-- Vite
-- React Router
-- React Hook Form e Zod
-- CSS responsivo
+### Rotas Obrigatórias (RF14)
+- **`/`**: Resumo do carrinho com a lista de produtos iniciais (RF01/RF02), quantidades, preços unitários, subtotais e valor total formatado em reais (RF03). Inclui controle dinâmico de quantidades e remoção de itens.
+- **`/pagamento`**: Formulário de checkout com validação via React Hook Form e Zod (titular, número do cartão com 16 dígitos, validade MM/AA e CVV de 3 dígitos), exibindo feedback de erros e simulação de processamento assíncrono.
+- **`/sucesso`**: Tela de confirmação e aprovação do pedido, com limpeza do carrinho após finalização.
+- **`/falha`**: Tela de erro exibindo exatamente a mensagem `"tentativa de golpe"` quando o número do cartão possui todos os dígitos iguais.
 
-## Estrutura projeto
+### Rotas Adicionais (Diferencial / Bônus)
+- **`/carrinho`**: Rota alternativa mapeada para a visualização do resumo do carrinho.
+- **`/catalogo`**: Catálogo paginado com busca em tempo real e filtros por categoria para adicionar novos veículos ao carrinho.
+- **`/produto/:id`**: Tela de detalhes individuais de cada veículo com ficha técnica e botão para adicionar ao carrinho.
+
+## Tecnologias e Custom Hooks
+
+- **React 19** com JavaScript/JSX
+- **Vite** como ferramenta de build rápida
+- **React Router** para roteamento declarativo e navegação SPA
+- **React Hook Form e Zod** para validação robusta de formulários
+- **Custom Hooks**:
+  - `usePagamento`: gerencia o estado assíncrono de simulação de compra e validação antifraude.
+  - `useProdutos`: encapsula o carregamento e integridade dos dados de produtos (array local estruturado), provendo estados reativos de `carregando`, `erro` e `produtos`, já preparado para consumo de API remota com tratamento completo de loading, erro e lista vazia.
+- **CSS responsivo** e acessível
+
+## Estrutura do projeto
 
 ```bash
 ├── 📁 public
@@ -46,7 +62,8 @@ O catálogo é um diferencial em relação ao fluxo mínimo solicitado na ativid
 │   ├── 📁 data
 │   │   └── ⚙️ produtos.json
 │   ├── 📁 hooks
-│   │   └── 📄 usePagamento.js
+│   │   ├── 📄 usePagamento.js
+│   │   └── 📄 useProdutos.js
 │   ├── 📁 pages
 │   │   ├── 📄 Carrinho.jsx
 │   │   ├── 📄 Catalogo.jsx
@@ -71,11 +88,13 @@ O catálogo é um diferencial em relação ao fluxo mínimo solicitado na ativid
 ├── ⚙️ package.json
 └── 📄 vite.config.js
 ```
+
 ## Clonar repositório
 
 ```bash
-https://github.com/diegotamiozzo/minha-revenda-ford.git
+git clone https://github.com/diegotamiozzo/minha-revenda-ford.git
 ```
+
 ## Executar localmente
 
 Requisitos: Node.js e npm.
@@ -87,21 +106,20 @@ npm run dev
 
 Abra o endereço exibido pelo Vite, normalmente `http://localhost:5173`.
 
-
 ## Fluxo da aplicação
 
-1. A rota `/` exibe o catálogo paginado de veículos, com busca e filtro por categoria.
-2. Cada card permite abrir `/produto/:id` para visualizar detalhes ou adicionar o veículo diretamente ao carrinho.
-3. A rota `/carrinho` permite alterar quantidades, remover itens e conferir subtotais e total.
-4. O botão **Finalizar compra** leva para `/pagamento`.
-5. O formulário valida titular, cartão com 16 dígitos, validade `MM/AA` e CVV.
-6. A compra mostra um estado assíncrono de processamento e segue para `/sucesso` quando aprovada.
-7. Um cartão com os 16 dígitos iguais segue para `/falha` e exibe `tentativa de golpe`.
+1. Ao abrir a raiz (`/`), o usuário visualiza o resumo do carrinho com itens carregados, subtotais calculados e o valor total formatado.
+2. É possível alterar quantidades, remover itens ou navegar até `/catalogo` para explorar o inventário completo e adicionar mais produtos ao carrinho.
+3. O botão **Finalizar compra** direciona o usuário para a rota `/pagamento`.
+4. O formulário valida em tempo real titular, número do cartão (16 dígitos), validade (`MM/AA`) e CVV (3 dígitos).
+5. Durante o envio, é exibido feedback de "Processando compra…" com o botão desabilitado para evitar duplo clique.
+6. Se todos os dígitos do cartão forem idênticos (ex.: `1111 1111 1111 1111`), a aplicação redireciona para `/falha` e apresenta a mensagem `"tentativa de golpe"`.
+7. Qualquer outro cartão em formato válido redireciona para `/sucesso`, apresentando a confirmação de aprovação e limpando o carrinho.
 
-Use apenas dados fictícios de cartão. Nenhuma informação de pagamento é persistida.
+> **Aviso**: Utilize exclusivamente dados fictícios. Nenhuma informação real de cartão de crédito é solicitada ou persistida.
 
 ## Acessibilidade e responsividade
 
-A interface usa HTML semântico, rótulos associados aos campos, mensagens de erro relacionadas aos respectivos inputs, regiões de resultado com `aria-live`, foco visível para navegação por teclado e controles de quantidade com áreas de toque ampliadas. O layout adapta catálogo, carrinho, pagamento e detalhes para telas menores.
+A interface foi desenvolvida seguindo princípios de HTML semântico (`<header>`, `<main>`, `<section>`, `<nav>`, `<form>`), rótulos associados explicitamente aos campos via `htmlFor`/`id`, mensagens de validação conectadas com `aria-describedby` e `role="alert"`, regiões de resultado configuradas com `aria-live`, foco visível otimizado para navegação por teclado e layout totalmente responsivo testado para dispositivos móveis e desktops.
 
 

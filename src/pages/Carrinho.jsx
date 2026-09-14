@@ -2,11 +2,37 @@ import { Link } from 'react-router-dom'
 import { ItemCarrinho } from '../components/ItemCarrinho.jsx'
 import { ResumoCompra } from '../components/ResumoCompra.jsx'
 
-export const Carrinho = ({ produtos, onAtualizarQuantidade, onRemover }) => {
+export const Carrinho = ({
+  produtos,
+  carregando = false,
+  erro = null,
+  onAtualizarQuantidade,
+  onRemover,
+}) => {
   const total = produtos.reduce(
     (soma, produto) => soma + produto.precoUnitario * produto.quantidade,
     0,
   )
+
+  if (carregando) {
+    return (
+      <section className="empty-state empty-cart" aria-live="polite">
+        <p className="eyebrow">Aguarde</p>
+        <h1>Carregando carrinho…</h1>
+        <p>Preparando os detalhes do seu pedido.</p>
+      </section>
+    )
+  }
+
+  if (erro) {
+    return (
+      <section className="empty-state empty-cart" aria-live="assertive">
+        <p className="eyebrow">Erro ao carregar</p>
+        <h1>Não foi possível carregar os produtos</h1>
+        <p>{erro}</p>
+      </section>
+    )
+  }
 
   if (produtos.length === 0) {
     return (
@@ -14,7 +40,7 @@ export const Carrinho = ({ produtos, onAtualizarQuantidade, onRemover }) => {
         <p className="eyebrow">Seu carrinho está vazio</p>
         <h1>Encontre seu próximo Ford</h1>
         <p>Escolha um veículo no catálogo para começar sua compra.</p>
-        <Link className="button button-primary" to="/">
+        <Link className="button button-primary" to="/catalogo">
           Explorar veículos
         </Link>
       </section>
@@ -46,7 +72,7 @@ export const Carrinho = ({ produtos, onAtualizarQuantidade, onRemover }) => {
           <Link className="button button-primary" to="/pagamento">
             Finalizar compra
           </Link>
-          <Link className="back-link" to="/">
+          <Link className="back-link" to="/catalogo">
             Continuar comprando
           </Link>
         </div>

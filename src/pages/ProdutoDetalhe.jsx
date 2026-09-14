@@ -2,17 +2,26 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { formatarMoeda } from '../utils/moeda.js'
 import { obterImagemProduto } from '../utils/imagens.js'
 
-export const ProdutoDetalhe = ({ produtos, onAdicionar }) => {
+export const ProdutoDetalhe = ({ produtos, carregando = false, onAdicionar }) => {
   const { id } = useParams()
   const produto = produtos.find((item) => item.id === id)
 
+  if (carregando) {
+    return (
+      <section className="empty-state" aria-live="polite">
+        <p className="eyebrow">Aguarde</p>
+        <h1>Carregando detalhes do veículo…</h1>
+      </section>
+    )
+  }
+
   if (!produto) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/catalogo" replace />
   }
 
   return (
     <section className="product-detail">
-      <Link className="back-link back-link-start" to="/">
+      <Link className="back-link back-link-start" to="/catalogo">
         ← Voltar para o catálogo
       </Link>
       <div className="product-detail-layout">
