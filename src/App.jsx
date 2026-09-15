@@ -12,7 +12,7 @@ import { Sucesso } from './pages/Sucesso.jsx'
 import './App.css'
 
 function App() {
-  const { produtos, carregando, erro } = useProdutos()
+  const { produtos, carregando } = useProdutos()
   const [carrinho, setCarrinho] = useState([])
 
   const adicionarAoCarrinho = (produto) => {
@@ -69,7 +69,6 @@ function App() {
                 <Catalogo
                   produtos={produtos}
                   carregando={carregando}
-                  erro={erro}
                   onAdicionar={adicionarAoCarrinho}
                 />
               }
@@ -80,7 +79,6 @@ function App() {
                 <Catalogo
                   produtos={produtos}
                   carregando={carregando}
-                  erro={erro}
                   onAdicionar={adicionarAoCarrinho}
                 />
               }
@@ -112,7 +110,10 @@ function App() {
               path="/pagamento"
               element={<Pagamento produtos={carrinho} />}
             />
-            <Route path="/sucesso" element={<Sucesso onCompraFinalizada={limparCarrinho} />} />
+            <Route
+              path="/sucesso"
+              element={<Sucesso onCompraFinalizada={limparCarrinho} />}
+            />
             <Route path="/falha" element={<Falha />} />
             <Route path="*" element={<NaoEncontrada />} />
           </Routes>

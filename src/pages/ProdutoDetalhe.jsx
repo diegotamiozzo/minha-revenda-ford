@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { formatarMoeda } from '../utils/moeda.js'
 import { obterImagemProduto } from '../utils/imagens.js'
@@ -5,6 +6,16 @@ import { obterImagemProduto } from '../utils/imagens.js'
 export const ProdutoDetalhe = ({ produtos, carregando = false, onAdicionar }) => {
   const { id } = useParams()
   const produto = produtos.find((item) => item.id === id)
+  const [adicionado, setAdicionado] = useState(false)
+
+  useEffect(() => {
+    if (!adicionado) {
+      return undefined
+    }
+
+    const timeout = window.setTimeout(() => setAdicionado(false), 1800)
+    return () => window.clearTimeout(timeout)
+  }, [adicionado])
 
   if (carregando) {
     return (
@@ -32,9 +43,19 @@ export const ProdutoDetalhe = ({ produtos, carregando = false, onAdicionar }) =>
           <p className="detail-description">{produto.descricao}</p>
           <strong className="detail-price">{formatarMoeda(produto.precoUnitario)}</strong>
           <p className="detail-note">Pagamento seguro e simulação sem cobrança real.</p>
-          <button className="button button-primary" type="button" onClick={() => onAdicionar(produto)}>
-            Adicionar ao carrinho
+          <button
+            className="button button-primary"
+            type="button"
+            onClick={() => {
+              onAdicionar(produto)
+              setAdicionado(true)
+            }}
+          >
+            {adicionado ? 'Adicionado ✓' : 'Adicionar ao carrinho'}
           </button>
+          <span className="add-feedback detail-add-feedback" role="status" aria-live="polite">
+            {adicionado ? 'Veículo adicionado ao carrinho.' : ''}
+          </span>
         </div>
       </div>
     </section>

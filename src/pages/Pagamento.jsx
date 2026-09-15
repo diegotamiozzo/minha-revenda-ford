@@ -4,7 +4,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { ResumoCompra } from '../components/ResumoCompra.jsx'
 import { usePagamento } from '../hooks/usePagamento.js'
-import { normalizarNumeroCartao } from '../utils/pagamento.js'
+import { normalizarNumeroCartao, validarValidadeCartao } from '../utils/pagamento.js'
 
 const schemaPagamento = z.object({
   titular: z.string().trim().min(1, 'Informe o nome do titular.'),
@@ -16,7 +16,8 @@ const schemaPagamento = z.object({
     }),
   validade: z
     .string()
-    .regex(/^(0[1-9]|1[0-2])\/\d{2}$/, 'Use o formato MM/AA.'),
+    .regex(/^(0[1-9]|1[0-2])\/\d{2}$/, 'Use o formato MM/AA.')
+    .refine(validarValidadeCartao, 'Informe uma validade futura.'),
   cvv: z.string().regex(/^\d{3}$/, 'Informe um CVV com 3 dígitos.'),
 })
 
@@ -44,7 +45,10 @@ export const Pagamento = ({ produtos }) => {
   const onSubmit = async (dados) => {
     const aprovado = await processarPagamento(dados)
 
-    navigate(aprovado ? '/sucesso' : '/falha')
+    navigate(aprovado ? '/sucesso' : '/falha', {
+      replace: true,
+      state: { origem: 'pagamento' },
+    })
   }
 
   return (

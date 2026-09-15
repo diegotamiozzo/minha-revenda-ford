@@ -1,10 +1,18 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useLocation } from 'react-router-dom'
 
 export const Sucesso = ({ onCompraFinalizada }) => {
+  const location = useLocation()
+
   useEffect(() => {
-    onCompraFinalizada()
-  }, [onCompraFinalizada])
+    if (location.state?.origem === 'pagamento') {
+      onCompraFinalizada()
+    }
+  }, [location.state, onCompraFinalizada])
+
+  if (location.state?.origem !== 'pagamento') {
+    return <Navigate to="/carrinho" replace />
+  }
 
   return (
     <section className="result-card" aria-live="polite">

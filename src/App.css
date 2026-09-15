@@ -265,6 +265,14 @@ body {
   padding: 0.6rem;
 }
 
+.add-feedback {
+  color: #75e0a6;
+  display: block;
+  font-size: 0.78rem;
+  min-height: 1.1rem;
+  padding-top: 0.45rem;
+}
+
 .button-secondary {
   background: #2b3441;
   color: #ffffff;

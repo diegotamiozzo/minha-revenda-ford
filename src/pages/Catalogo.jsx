@@ -4,7 +4,7 @@ import { CardProduto } from '../components/CardProduto.jsx'
 
 const ITENS_POR_PAGINA = 6
 
-export const Catalogo = ({ produtos, carregando = false, erro = null, onAdicionar }) => {
+export const Catalogo = ({ produtos, carregando = false, onAdicionar }) => {
   const [pagina, setPagina] = useState(1)
   const [categoria, setCategoria] = useState('Todos')
   const [busca, setBusca] = useState('')
@@ -47,16 +47,6 @@ export const Catalogo = ({ produtos, carregando = false, erro = null, onAdiciona
         <p className="eyebrow">Aguarde</p>
         <h1>Carregando catálogo…</h1>
         <p>Buscando os veículos disponíveis para você.</p>
-      </section>
-    )
-  }
-
-  if (erro) {
-    return (
-      <section className="empty-state" aria-live="assertive">
-        <p className="eyebrow">Erro ao carregar dados</p>
-        <h1>Não foi possível carregar os veículos</h1>
-        <p>{erro}</p>
       </section>
     )
   }
