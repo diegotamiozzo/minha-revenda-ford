@@ -8,7 +8,7 @@ export const NaoEncontrada = () => (
     <p className="eyebrow">Página não encontrada</p>
     <h1>Erro 404</h1>
     <p>A página que você procura não existe ou foi movida.</p>
-    <Link className="button button-primary" to="/">
+    <Link className="button button-primary" to="/produtos">
       Voltar à loja
     </Link>
   </section>

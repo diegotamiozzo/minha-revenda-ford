@@ -1,31 +1,28 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CardProduto } from '../components/CardProduto.jsx'
+import { useCarrinho } from '../contexts/CarrinhoContext.jsx'
+import { useProdutos } from '../hooks/useProdutos.js'
+import { filtrarProdutos } from '../utils/busca.js'
 
 const ITENS_POR_PAGINA = 6
 
-export const Catalogo = ({ produtos, carregando = false, onAdicionar }) => {
+export const Catalogo = () => {
+  const { produtos, carregando, erro } = useProdutos()
+  const { adicionarItem } = useCarrinho()
   const [pagina, setPagina] = useState(1)
   const [categoria, setCategoria] = useState('Todos')
   const [busca, setBusca] = useState('')
 
   const categorias = useMemo(
-    () => ['Todos', ...new Set(produtos.map((produto) => produto.categoria))],
+    () => ['Todos', ...new Set(produtos.map((produto) => produto.categoria).filter(Boolean))],
     [produtos],
   )
-  const produtosFiltrados = useMemo(() => {
-    const termo = busca.trim().toLocaleLowerCase('pt-BR')
 
-    return produtos.filter((produto) => {
-      const pertenceCategoria = categoria === 'Todos' || produto.categoria === categoria
-      const correspondeBusca =
-        !termo ||
-        produto.nome.toLocaleLowerCase('pt-BR').includes(termo) ||
-        produto.descricao.toLocaleLowerCase('pt-BR').includes(termo)
-
-      return pertenceCategoria && correspondeBusca
-    })
-  }, [busca, categoria, produtos])
+  const produtosFiltrados = useMemo(
+    () => filtrarProdutos(produtos, busca, categoria),
+    [busca, categoria, produtos],
+  )
 
   const totalPaginas = Math.max(1, Math.ceil(produtosFiltrados.length / ITENS_POR_PAGINA))
   const inicio = (pagina - 1) * ITENS_POR_PAGINA
@@ -47,6 +44,16 @@ export const Catalogo = ({ produtos, carregando = false, onAdicionar }) => {
         <p className="eyebrow">Aguarde</p>
         <h1>Carregando catálogo…</h1>
         <p>Buscando os veículos disponíveis para você.</p>
+      </section>
+    )
+  }
+
+  if (erro) {
+    return (
+      <section className="empty-state" aria-live="assertive">
+        <p className="eyebrow">Erro ao carregar</p>
+        <h1>Não foi possível carregar o catálogo</h1>
+        <p>{erro}</p>
       </section>
     )
   }
@@ -77,6 +84,7 @@ export const Catalogo = ({ produtos, carregando = false, onAdicionar }) => {
             placeholder="Ex.: Ranger, Mustang..."
           />
         </label>
+
         <label className="category-field">
           <span>Categoria</span>
           <select value={categoria} onChange={(evento) => alterarCategoria(evento.target.value)}>
@@ -92,13 +100,18 @@ export const Catalogo = ({ produtos, carregando = false, onAdicionar }) => {
       {produtosDaPagina.length > 0 ? (
         <div className="product-grid">
           {produtosDaPagina.map((produto) => (
-            <CardProduto key={produto.id} produto={produto} onAdicionar={onAdicionar} />
+            <CardProduto key={produto.id} produto={produto} onAdicionar={adicionarItem} />
           ))}
         </div>
       ) : (
         <div className="empty-state">
           <h2>Nenhum veículo encontrado</h2>
           <p>Tente buscar por outro nome ou selecione outra categoria.</p>
+          {busca && (
+            <button className="button button-secondary" type="button" onClick={() => setBusca('')}>
+              Limpar busca
+            </button>
+          )}
         </div>
       )}
 

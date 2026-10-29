@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { ResumoCompra } from '../components/ResumoCompra.jsx'
+import { useCarrinho } from '../contexts/CarrinhoContext.jsx'
 import { usePagamento } from '../hooks/usePagamento.js'
 import { normalizarNumeroCartao, validarValidadeCartao } from '../utils/pagamento.js'
 
@@ -21,8 +22,9 @@ const schemaPagamento = z.object({
   cvv: z.string().regex(/^\d{3}$/, 'Informe um CVV com 3 dígitos.'),
 })
 
-export const Pagamento = ({ produtos }) => {
+export const Pagamento = () => {
   const navigate = useNavigate()
+  const { itens, valorTotal } = useCarrinho()
   const { processando, processarPagamento } = usePagamento()
   const {
     register,
@@ -33,14 +35,9 @@ export const Pagamento = ({ produtos }) => {
     mode: 'onBlur',
   })
 
-  if (produtos.length === 0) {
+  if (itens.length === 0) {
     return <Navigate to="/carrinho" replace />
   }
-
-  const total = produtos.reduce(
-    (soma, produto) => soma + produto.precoUnitario * produto.quantidade,
-    0,
-  )
 
   const onSubmit = async (dados) => {
     const aprovado = await processarPagamento(dados)
@@ -150,7 +147,7 @@ export const Pagamento = ({ produtos }) => {
           </Link>
         </form>
 
-        <ResumoCompra total={total} />
+        <ResumoCompra total={valorTotal} />
       </div>
     </section>
   )

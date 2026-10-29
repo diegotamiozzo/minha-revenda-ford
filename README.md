@@ -1,120 +1,94 @@
 # Minha Revenda Ford
 
-Aplicação SPA de estudo que simula uma loja virtual de uma concessionária Ford. A página inicial (`/`) apresenta o catálogo completo de veículos, permitindo ao usuário pesquisar, filtrar, ver detalhes, adicionar itens ao carrinho e seguir pelas etapas de pagamento com simulação no navegador.
+Aplicação SPA para simular uma loja virtual de veículos da Ford. O fluxo principal inclui catálogo, busca, detalhes do produto, carrinho, checkout com validação e telas de sucesso/falha.
 
-## Rotas da Aplicação
+## Funcionalidades principais
 
-- **`/` e `/catalogo` (Home)**: Catálogo de veículos paginado com busca em tempo real e filtros por categoria. É a porta de entrada da loja para exploração e adição de veículos ao carrinho.
-- **`/produto/:id`**: Tela de detalhes individuais do veículo com ficha técnica e botão de adicionar ao carrinho.
-- **`/carrinho`**: Resumo do carrinho com itens adicionados, quantidades, subtotais e cálculo do total da compra em reais (RF03). Permite alterar quantidades e remover itens.
-- **`/pagamento`**: Formulário de checkout com validação de dados via React Hook Form e Zod (RF06), validação de 16 dígitos, MM/AA e CVV, e feedback assíncrono durante o envio (RF08).
-- **`/sucesso`**: Confirmação da compra aprovada (RF10), limpando o carrinho para novas compras.
-- **`/falha`**: Tela de erro exibindo a mensagem `"tentativa de golpe"` (RF11) quando todos os dígitos do cartão são idênticos.
+- Catálogo de veículos com busca e filtro por categoria
+- Página de detalhe do veículo com dados e botão de compra
+- Carrinho compartilhado via Context API e persistência em localStorage
+- Rota privada para o pagamento somente quando há itens no carrinho
+- Simulação de processamento de cartão com regras de fraude
+- Layout com cabeçalho, navegação e rodapé
+- Testes automatizados para regras de negócio
 
-## Tecnologias e Custom Hooks
+## Stack
 
-- **React 19** com JavaScript/JSX
-- **Vite** como ferramenta de build rápida
-- **React Router** para roteamento declarativo e navegação SPA
-- **React Hook Form e Zod** para validação robusta de formulários
-- **Custom Hooks**:
-  - `usePagamento`: gerencia o estado assíncrono de simulação de compra e validação antifraude.
-  - `useProdutos`: encapsula o carregamento e integridade dos dados de produtos (array local estruturado), provendo estados reativos de `carregando`, `erro` e `produtos`, já preparado para consumo de API remota com tratamento completo de loading, erro e lista vazia.
-- **CSS responsivo** e acessível
+- React 19
+- Vite
+- React Router DOM
+- React Hook Form + Zod
+- JSON Server para simular a API de produtos
+- Vitest para testes unitários
 
-## Estrutura do projeto
+## Requisitos
 
-```bash
-├── 📁 public
-│   └── 📄 favicon.ico
-├── 📁 src
-│   ├── 📁 assets
-│   │   └── 📁 img
-│   │       ├── 🖼️ 01-nova-geracao-ranger.jpg
-│   │       ├── 🖼️ 02-ranger-raptor.jpg
-│   │       ├── 🖼️ 03-maverick-black.jpg
-│   │       ├── 🖼️ 04-f-150.jpg
-│   │       ├── 🖼️ 05-f-150-tremor.jpg
-│   │       ├── 🖼️ 06-maverick-tremor.jpg
-│   │       ├── 🖼️ 07-territory.jpg
-│   │       ├── 🖼️ 08-bronco-sport.jpg
-│   │       ├── 🖼️ 09-mustang-mach-e.jpg
-│   │       ├── 🖼️ 10-mustang-dark-horse.jpg
-│   │       ├── 🖼️ 11-maverick-hybrid.jpg
-│   │       ├── 🖼️ 12-ranger-xl-2-0-ch-diesel-4x4-mt.jpg
-│   │       ├── 🖼️ 13-ranger-xl-2-0-ch-diesel-4x4-at.jpg
-│   │       ├── 🖼️ 14-ranger-xl-2-0-cs-diesel-4x4-mt.jpg
-│   │       ├── 🖼️ 15-ranger-xl-2-0-cs-diesel-4x4-at.jpg
-│   │       ├── 🖼️ 16-ranger-xl-2-0-cd-diesel-4x4-mt.jpg
-│   │       ├── 🖼️ 17-ranger-xl-2-0-cd-diesel-4x4-at.jpg
-│   │       ├── 🖼️ 18-ranger-xls-2-0-4x4.jpg
-│   │       └── 🖼️ logo-ford.png
-│   ├── 📁 components
-│   │   ├── 📄 CardProduto.jsx
-│   │   ├── 📄 ItemCarrinho.jsx
-│   │   └── 📄 ResumoCompra.jsx
-│   ├── 📁 data
-│   │   └── ⚙️ produtos.json
-│   ├── 📁 hooks
-│   │   ├── 📄 usePagamento.js
-│   │   └── 📄 useProdutos.js
-│   ├── 📁 pages
-│   │   ├── 📄 Carrinho.jsx
-│   │   ├── 📄 Catalogo.jsx
-│   │   ├── 📄 Falha.jsx
-│   │   ├── 📄 NaoEncontrada.jsx
-│   │   ├── 📄 Pagamento.jsx
-│   │   ├── 📄 ProdutoDetalhe.jsx
-│   │   └── 📄 Sucesso.jsx
-│   ├── 📁 utils
-│   │   ├── 📄 imagens.js
-│   │   ├── 📄 moeda.js
-│   │   └── 📄 pagamento.js
-│   ├── 🎨 App.css
-│   ├── 📄 App.jsx
-│   ├── 🎨 index.css
-│   └── 📄 main.jsx
-├── ⚙️ .gitignore
-├── 📝 README.md
-├── 📄 eslint.config.js
-├── 🌐 index.html
-├── ⚙️ package-lock.json
-├── ⚙️ package.json
-└── 📄 vite.config.js
-```
+- Node.js 18+
+- npm
 
-## Clonar repositório
+## Como executar
 
-```bash
-git clone https://github.com/diegotamiozzo/minha-revenda-ford.git
-```
-
-## Executar localmente
-
-Requisitos: Node.js e npm.
+1. Instale as dependências:
 
 ```bash
 npm install
+```
+
+2. Inicie a API simulada em paralelo:
+
+```bash
+npm run api
+```
+
+3. Inicie a aplicação:
+
+```bash
 npm run dev
 ```
 
-Abra o endereço exibido pelo Vite, normalmente `http://localhost:5173`.
+4. Acesse a aplicação em `http://localhost:5173`.
 
-## Fluxo da aplicação
+## Scripts
 
-1. Ao abrir a rota raiz (`/`), o usuário acessa a página inicial com o catálogo de veículos, busca e filtros por categoria.
-2. Na vitrine (`/` ou `/catalogo`) ou na página de detalhes (`/produto/:id`), o usuário adiciona os veículos desejados ao carrinho.
-3. No carrinho (`/carrinho`), o usuário confere a lista de itens, subtotais e total formatado em reais, com controles para alterar quantidades ou remover itens.
-4. O botão **Finalizar compra** direciona o usuário para a rota `/pagamento`.
-5. O formulário valida em tempo real titular, número do cartão (16 dígitos), validade (`MM/AA`) e CVV (3 dígitos).
-6. Durante o envio, é exibido feedback de "Processando compra…" com o botão desabilitado para evitar duplo clique.
-7. Se todos os dígitos do cartão forem idênticos (ex.: `1111 1111 1111 1111`), a aplicação redireciona para `/falha` e apresenta a mensagem `"tentativa de golpe"`.
-8. Qualquer outro cartão em formato válido redireciona para `/sucesso`, apresentando a confirmação de aprovação e limpando o carrinho.
+```bash
+npm run dev
+npm run api
+npm run build
+npm run lint
+npm test
+```
 
-> **Aviso**: Utilize exclusivamente dados fictícios. Nenhuma informação real de cartão de crédito é solicitada ou persistida.
+## Fluxo de uso
 
-## Acessibilidade e responsividade
+1. A rota `/produtos` lista os veículos disponíveis.
+2. O usuário pode buscar por nome e filtrar por categoria.
+3. A rota `/produto/:id` exibe os detalhes do produto.
+4. Ao adicionar ao carrinho, o contador no cabeçalho é atualizado.
+5. O carrinho pode ser revisado em `/carrinho`.
+6. O checkout em `/pagamento` valida nome, cartão, validade e CVV.
+7. Cartões com todos os dígitos iguais redirecionam para `/falha`.
+8. Qualquer cartão válido envia para `/sucesso`.
 
-A interface foi desenvolvida seguindo princípios de HTML semântico (`<header>`, `<main>`, `<section>`, `<nav>`, `<form>`), rótulos associados explicitamente aos campos via `htmlFor`/`id`, mensagens de validação conectadas com `aria-describedby` e `role="alert"`, regiões de resultado configuradas com `aria-live`, foco visível otimizado para navegação por teclado e layout totalmente responsivo testado para dispositivos móveis e desktops.
+## Estrutura de pastas
+
+```bash
+src/
+  components/
+  contexts/
+  hooks/
+  pages/
+  routes/
+  services/
+  tests/
+  utils/
+  App.jsx
+  main.jsx
+```
+
+## Observações
+
+- Os dados do catálogo ficam em `db.json` e são consumidos por `json-server` em `http://localhost:3001`.
+- O carrinho é persistido no navegador com `localStorage` para manter a experiência mais consistente.
+- Os dados de cartão são fictícios e usados apenas para simular a compra.
 
 
