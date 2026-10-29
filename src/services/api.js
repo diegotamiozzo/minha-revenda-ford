@@ -9,7 +9,8 @@ const normalizarProduto = (produto = {}) => ({
 })
 
 export const buscarProdutos = async () => {
-  const resposta = await fetch(`${API_BASE_URL}/produtos`)
+  const url = import.meta.env.DEV ? `${API_BASE_URL}/produtos` : '/db.json'
+  const resposta = await fetch(url)
 
   if (!resposta.ok) {
     throw new Error('Não foi possível carregar os produtos.')
@@ -22,12 +23,14 @@ export const buscarProdutos = async () => {
 }
 
 export const buscarProdutoPorId = async (id) => {
-  const resposta = await fetch(`${API_BASE_URL}/produtos/${id}`)
-
-  if (!resposta.ok) {
-    throw new Error('Produto não encontrado.')
+  if (import.meta.env.DEV) {
+    const resposta = await fetch(`${API_BASE_URL}/produtos/${id}`)
+    if (!resposta.ok) throw new Error('Produto não encontrado.')
+    return normalizarProduto(await resposta.json())
   }
 
-  const produto = await resposta.json()
-  return normalizarProduto(produto)
+  const produtos = await buscarProdutos()
+  const produto = produtos.find((p) => p.id === String(id))
+  if (!produto) throw new Error('Produto não encontrado.')
+  return produto
 }
